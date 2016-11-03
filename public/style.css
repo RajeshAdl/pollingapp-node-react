@@ -1,3 +1,25 @@
 #react-container h1{
 	color: green;
 }
+
+.disconnected:after {
+	position: absolute;
+	content: '';
+	height: 30px;
+	width: 30px;
+	top: 30px;
+	border-radius: 100%;
+	background-color: red;
+	float: right;
+}
+
+.connected:after {
+	position: absolute;
+	content: '';
+	height: 30px;
+	width: 30px;
+	top: 30px;
+	border-radius: 100%;
+	background-color: green;
+	float: right;
+}
