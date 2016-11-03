@@ -34054,7 +34054,7 @@
 									'p',
 									null,
 									this.props.features.audience.length,
-									' audience connected'
+									'audience connected'
 								),
 								_react2.default.createElement(
 									'p',

@@ -5,8 +5,8 @@ var io = require('socket.io-client');
 var Header = require('./parts/Header');
 
 var App = React.createClass({
-    
-    getInitialState(){
+
+    getInitialState() {
         return {
             status: 'disconnected',
             title: '',
@@ -19,7 +19,7 @@ var App = React.createClass({
         }
     },
 
-    componentWillMount(){
+    componentWillMount() {
         this.socket = io('http://localhost:3000');
         this.socket.on('connect', this.connect);
         this.socket.on('disconnect', this.disconnect);
@@ -32,55 +32,55 @@ var App = React.createClass({
         this.socket.on('results', this.updateResults);
     },
 
-    emit(eventName, payload){
+    emit(eventName, payload) {
         this.socket.emit(eventName, payload);
     },
 
-    connect(){
-        var member = (sessionStorage.member)? JSON.parse(sessionStorage.member): null;
-        if(member && member.type === 'audience'){
+    connect() {
+        var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
+        if (member && member.type === 'audience') {
             this.emit('join', member);
-        } 
-        else if(member && member.type === 'speaker'){
-            this.emit('start', {name: member.name, title: sessionStorage.title})
         }
-        this.setState({status: 'connected'});
-    },
-    
-    disconnect(){
-        this.setState({status: 'disconnected', title: 'disconnected', speaker: ''});
+        else if (member && member.type === 'speaker') {
+            this.emit('start', { name: member.name, title: sessionStorage.title })
+        }
+        this.setState({ status: 'connected' });
     },
 
-    updateState(serverState){
+    disconnect() {
+        this.setState({ status: 'disconnected', title: 'disconnected', speaker: '' });
+    },
+
+    updateState(serverState) {
         this.setState(serverState);
     },
 
-    joined(member){
+    joined(member) {
         sessionStorage.member = JSON.stringify(member);
-        this.setState({member: member});
+        this.setState({ member: member });
     },
 
-    updateAudience(audience){
-        this.setState({audience: audience});
+    updateAudience(audience) {
+        this.setState({ audience: audience });
     },
 
-    start(presentation){
-        if(this.state.member.type === "speaker"){
+    start(presentation) {
+        if (this.state.member.type === "speaker") {
             sessionStorage.title = presentation.title;
         }
         this.setState(presentation);
     },
 
-    ask(question){
+    ask(question) {
         sessionStorage.answer = "";
-        this.setState({ currentQuestion: question});
+        this.setState({ currentQuestion: question });
     },
 
-    updateResults(data){
-        this.setState({results: data});
+    updateResults(data) {
+        this.setState({ results: data });
     },
 
-    render(){
+    render() {
         return (
             <div>
                 <Header {...this.state} />

@@ -21,29 +21,29 @@ app.use(express.static('./node_modules/bootstrap/dist'))
 var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
-io.sockets.on('connection', function(socket){
+io.sockets.on('connection', function (socket) {
 
-	socket.once('disconnect',function(){
-		var member = _.findWhere(audience, {id: this.id});
+	socket.once('disconnect', function () {
+		var member = _.findWhere(audience, { id: this.id });
 
-		if(member){
+		if (member) {
 			audience.splice(audience.indexOf(member), 1);
 			io.sockets.emit('audience', audience);
 			console.log("Left: %s", member.name);
 		}
-		else if(this.id === speaker.id){
+		else if (this.id === speaker.id) {
 			console.log("%s has left. %s is over", speaker.name, title);
 			speaker = {};
 			title = "Untitled presentation";
-			io.sockets.emit('end', { title: title, speaker: ''});
+			io.sockets.emit('end', { title: title, speaker: '' });
 		}
 
-		connections.splice(connections.indexOf(socket),1);
+		connections.splice(connections.indexOf(socket), 1);
 		socket.disconnect();
 		console.log("Disconnected: %s sockets remaining", connections.length);
 	});
 
-	socket.on('join', function(payload){
+	socket.on('join', function (payload) {
 		var newMember = {
 			id: this.id,
 			name: payload.name,
@@ -52,33 +52,33 @@ io.sockets.on('connection', function(socket){
 		this.emit('joined', newMember);
 		audience.push(newMember);
 		io.sockets.emit('audience', audience);
-		console.log("Audience joined "+payload.name);
+		console.log("Audience joined " + payload.name);
 	});
 
-	socket.on('start', function(payload){
+	socket.on('start', function (payload) {
 		speaker.name = payload.name;
 		speaker.id = this.id;
-		speaker.type = 'speaker';	
+		speaker.type = 'speaker';
 		title = payload.title;
 		this.emit('joined', speaker);
-		io.sockets.emit('start', {title: title, speaker: speaker.name});
-		console.log("Presentation started: %s by %s", title, speaker.name);	
+		io.sockets.emit('start', { title: title, speaker: speaker.name });
+		console.log("Presentation started: %s by %s", title, speaker.name);
 	});
 
-	socket.on('ask', function(question){
+	socket.on('ask', function (question) {
 		currentQuestion = question;
-		results = {a: 0, b:0, c:0, d:0};
+		results = { a: 0, b: 0, c: 0, d: 0 };
 		io.sockets.emit('ask', currentQuestion);
 		console.log("Question Asked: '%s'", question.q);
 	});
 
-	socket.on('answer', function(payload){
+	socket.on('answer', function (payload) {
 		results[payload.choice]++;
 		io.sockets.emit('results', currentQuestion);
 		console.log("Answer: %s - %j", payload.choice, results);
 	});
 
-	socket.emit('welcome',{
+	socket.emit('welcome', {
 		title: title,
 		audience: audience,
 		speaker: speaker.name,

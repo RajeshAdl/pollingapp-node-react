@@ -18,10 +18,10 @@ import NotFound from './components/NotFound';
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Audience}/>
-      <Route path="speaker" component={Speaker}/>
-      <Route path="board" component={Board}/>
-	  <Route path="*" component={NotFound}/>
+      <IndexRoute component={Audience} />
+      <Route path="speaker" component={Speaker} />
+      <Route path="board" component={Board} />
+      <Route path="*" component={NotFound} />
     </Route>
   </Router>,
   document.getElementById('react-container')

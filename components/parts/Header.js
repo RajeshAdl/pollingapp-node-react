@@ -1,30 +1,30 @@
 var React = require('react');
 
 var Header = React.createClass({
-	
+
 	propTypes: {
 		title: React.PropTypes.string.isRequired
 	},
 
-	getDefaultProps(){
+	getDefaultProps() {
 		return {
 			status: 'disconnected'
 		}
 	},
 
-    render(){
-        return (
-            <header className="row">
+	render() {
+		return (
+			<header className="row">
 				<div className="col-xs-10">
-					<h1> { this.props.title } </h1>
-					<p> { this.props.speaker } </p>
+					<h1> {this.props.title} </h1>
+					<p> {this.props.speaker} </p>
 				</div>
 				<div className="col-xs-2">
 					<span id="connection-status" class={this.props.status}></span>
 				</div>
-            </header>
-        );
-    }
+			</header>
+		);
+	}
 })
 
 module.exports = Header;

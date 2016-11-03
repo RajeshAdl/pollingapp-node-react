@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 
-export default class Join extends React.Component{
+export default class Join extends React.Component {
 
-	addMemberRow(member, i){
-		return(
+	addMemberRow(member, i) {
+		return (
 			<tr key={i}>
 				<td>{member.name}</td>
 				<td>{member.id}</td>
@@ -13,7 +13,7 @@ export default class Join extends React.Component{
 		);
 	}
 
-	render(){
+	render() {
 		return (
 			<div>
 				<h2>Attendance - {this.props.audience.length}</h2>
@@ -30,5 +30,5 @@ export default class Join extends React.Component{
 				</table>
 			</div>
 		);
-	}	
+	}
 }

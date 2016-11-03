@@ -12,18 +12,18 @@ var Board = React.createClass({
 	// 	});
 	// },
 
-	render(){
+	render() {
 		return (
 			<div id="scoreboard">
-				<Display if={this.props.features.status==='connected' && this.props.features.currentQuestion}>
+				<Display if={this.props.features.status === 'connected' && this.props.features.currentQuestion}>
 					<p> {JSON.stringify(this.props.features.results)}</p>
 				</Display>
-				<Display if={this.props.features.status==='connected' && !this.props.features.currentQuestion}>
+				<Display if={this.props.features.status === 'connected' && !this.props.features.currentQuestion}>
 					<h3>Awaiting a question...</h3>
 				</Display>
 			</div>
 		);
-	}	
+	}
 });
 
 module.exports = Board;

@@ -2,30 +2,30 @@ import React from 'react';
 import Display from './Display';
 
 var Ask = React.createClass({
-   
-	getInitialState(){
+
+	getInitialState() {
 		return {
 			choices: [],
 			answer: undefined
 		}
 	},
 
-	componentWillMount(){
+	componentWillMount() {
 		this.setUpChoices();
 	},
 
-	componentWillReceiveProps(){
+	componentWillReceiveProps() {
 		this.setUpChoices();
 	},
 
-	setUpChoices(){
+	setUpChoices() {
 		var choices = Object.keys(this.props.question);
 		choices.shift();
-		this.setState({choices: choices, answer: sessionStorage.answer});
+		this.setState({ choices: choices, answer: sessionStorage.answer });
 	},
 
-	select(choice){
-		this.setState({answer: choice});
+	select(choice) {
+		this.setState({ answer: choice });
 		sessionStorage.answer = choice;
 		this.props.emit('answer', {
 			question: this.props.question,
@@ -33,16 +33,16 @@ var Ask = React.createClass({
 		})
 	},
 
-	addChoiceButton(choice, i){
+	addChoiceButton(choice, i) {
 		var buttonTypes = ['primary', 'success', 'warning', 'danger'];
 		return (
-			<button key={i} className={"col-xs-12 col-sm-6 btn btn-"+buttonTypes[i]} onClick={this.select.bind(this, choice)}>
+			<button key={i} className={"col-xs-12 col-sm-6 btn btn-" + buttonTypes[i]} onClick={this.select.bind(this, choice)}>
 				{choice}: {this.props.question[choice]}
 			</button>
 		);
 	},
 
-	render(){
+	render() {
 		return (
 			<div id="currentQuestion">
 				<Display if={this.state.answer}>
@@ -57,7 +57,7 @@ var Ask = React.createClass({
 				</Display>
 			</div>
 		);
-	}	
+	}
 });
 
 module.exports = Ask;
