@@ -23,3 +23,13 @@
 	background-color: green;
 	float: right;
 }
+
+#questions div span {
+	display: block;
+	border: 2px solid green;
+	cursor: hand;
+}
+
+#questions div span:hover {
+	background-color: yellow;
+}
